@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CodeChallenge.DataAccess\CodeChallenge.DataAccess.csproj" />
+    <ProjectReference Include="..\CodeChallenge.Fees\CodeChallenge.Fees.csproj" />
+  </ItemGroup>
+
 </Project>

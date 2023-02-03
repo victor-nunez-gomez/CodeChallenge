@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using CodeChallenge.DataAccess.Context;
+using CodeChallenge.DataAccess.Interfaces;
+using CodeChallenge.DataAccess.Repositories;
 using CodeChallenge.Fees.Interfaces;
 using CodeChallenge.Fees.Services;
 
@@ -9,6 +13,9 @@ _config.AddJsonFile($"appsettings.{_env}.json", optional: true);
 
 // Add services to the container.
 builder.Services.AddSingleton<IFeeService, FeeService>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("LocalDB"));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
