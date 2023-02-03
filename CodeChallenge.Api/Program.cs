@@ -4,6 +4,8 @@ using CodeChallenge.DataAccess.Interfaces;
 using CodeChallenge.DataAccess.Repositories;
 using CodeChallenge.Fees.Interfaces;
 using CodeChallenge.Fees.Services;
+using CodeChallenge.Cards.Interfaces;
+using CodeChallenge.Cards.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var _config = builder.Configuration;
@@ -14,6 +16,7 @@ _config.AddJsonFile($"appsettings.{_env}.json", optional: true);
 // Add services to the container.
 builder.Services.AddSingleton<IFeeService, FeeService>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICardService, CardService>();
 
 builder.Services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("LocalDB"));
 
