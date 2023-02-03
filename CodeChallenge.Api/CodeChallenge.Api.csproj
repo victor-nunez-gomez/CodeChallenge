@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CodeChallenge.Cards\CodeChallenge.Cards.csproj" />
+    <ProjectReference Include="..\CodeChallenge.DataAccess\CodeChallenge.DataAccess.csproj" />
+    <ProjectReference Include="..\CodeChallenge.Fees\CodeChallenge.Fees.csproj" />
+  </ItemGroup>
+
 </Project>
