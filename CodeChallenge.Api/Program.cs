@@ -1,11 +1,13 @@
-using Microsoft.EntityFrameworkCore;
+using CodeChallenge.Api.Security;
+using CodeChallenge.Cards.Interfaces;
+using CodeChallenge.Cards.Services;
 using CodeChallenge.DataAccess.Context;
 using CodeChallenge.DataAccess.Interfaces;
 using CodeChallenge.DataAccess.Repositories;
 using CodeChallenge.Fees.Interfaces;
 using CodeChallenge.Fees.Services;
-using CodeChallenge.Cards.Interfaces;
-using CodeChallenge.Cards.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var _config = builder.Configuration;
@@ -17,6 +19,12 @@ _config.AddJsonFile($"appsettings.{_env}.json", optional: true);
 builder.Services.AddSingleton<IFeeService, FeeService>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICardService, CardService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+// Add authentication
+builder.Services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
 
 builder.Services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("LocalDB"));
 
@@ -36,6 +44,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

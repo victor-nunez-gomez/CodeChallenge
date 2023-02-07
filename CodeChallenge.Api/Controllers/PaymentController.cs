@@ -1,12 +1,14 @@
 ﻿using CodeChallenge.Cards.Interfaces;
 using CodeChallenge.Cards.ViewModel;
 using CodeChallenge.DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeChallenge.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PaymentController : ControllerBase
     {
         private readonly ICardService _cardService;
@@ -22,6 +24,7 @@ namespace CodeChallenge.Api.Controllers
         /// <param name="card">Object which contains the Card information</param>
         /// <returns></returns>
         [ProducesResponseType(typeof(Card), 201)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(typeof(UpsertViewModel<Card>), 500)]
         [HttpPost]
         public async Task<IActionResult> CreateCard([FromBody] Card card)
@@ -43,6 +46,7 @@ namespace CodeChallenge.Api.Controllers
         /// <param name="amount">The amount to be paid</param>
         /// <returns></returns>
         [ProducesResponseType(typeof(Payment), 200)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [HttpPost("{id}")]
@@ -63,6 +67,7 @@ namespace CodeChallenge.Api.Controllers
         /// <param name="id">The card's Id</param>
         /// <returns></returns>
         [ProducesResponseType(typeof(decimal), 200)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(typeof(decimal), 404)]
         [ProducesResponseType(typeof(decimal), 500)]
         [HttpGet("{id}")]
